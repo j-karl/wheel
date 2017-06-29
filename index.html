@@ -9,9 +9,65 @@
 </head>
 <body>
 	<div class="bg">
-		<img src="images/11.jpg" alt="">
+		<!-- <img src="images/11.jpg" alt="">
 		<img src="images/22.jpg" alt="">
-		<img src="images/33.jpg" alt="">
+		<img src="images/33.jpg" alt=""> -->
 	</div>
 </body>
+
+<script type="text/javascript">
+	window.onload = function(){
+		function Load_pic(arr){
+			 this.loop_f=function(i,o_file,len,f,obj){
+			   if(i<len-1){
+			     i=i+1;
+			     f(i,o_file,len,obj);
+			     }
+			  };
+			  this.creat_pic=function(i,o_file,len,obj){
+			    var f=arguments.callee,
+			    doc=document,
+			    image = doc.createElement("img");  
+			    image.src =o_file[i];
+			    i<len?doc.getElementsByTagName("body")[0].appendChild(image):'';
+			    if(navigator.userAgent.indexOf("MSIE")>0){ 
+			        if($.browser.version==6.0 || $.browser.version==9.0){
+			        //IE9和IE6一样 微软真是怪异
+			          image.onreadystatechange = function () { 
+			            if (image.readyState == "complete"){ 
+			              obj.loop_f(i,o_file,len,f,obj);
+			            } 
+			          }; 
+			        }else{ 
+			          ie7imagetime = window.setInterval(function(){ 
+			            var rs = image.readyState; 
+			            if(rs=="complete"){ 
+			              window.clearInterval(ie7imagetime); 
+			              obj.loop_f(i,o_file,len,f,obj);
+			            }else{ 
+			              return; 
+			            } 
+			          },200); 
+			        } 
+			      }else{ 
+			        image.onload = function () { 
+			          if (image.complete == true){ 
+			          obj.loop_f(i,o_file,len,f,obj);
+			          } 
+			        }; 
+			    }
+			  }; 
+			   if(arr.constructor===Array){
+			   var len=arr.length,
+			      i=0;
+			   i<len?this.creat_pic(i,arr,len,this):'';
+			  };
+			 }
+			 new Load_pic([
+			 		'images/11.jpg',
+			 		'images/22.jpg',
+			 		'images/33.jpg',
+			 	]);	
+	}
+</script>
 </html>
