@@ -1,0 +1,32 @@
+*{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+img{
+	border: none;
+}
+@mixin adapter($size){
+  	$list:(320px,360px,375px,384px,412px,414px,600px,640px,768px,800px,960px,1280px,1440px,1600px);
+  	@each $i in $list{
+    	@media screen and (min-width: #{$i}){
+      		html {
+        		font-size: 100px * $i/$size;
+      		}
+    	}
+  	}
+}
+
+@include adapter(640px);
+
+.bg{
+	width: 100%;
+	height: auto;
+}
+img{
+	display: block;
+	width: 100%;
+}
